@@ -2,9 +2,9 @@
 
 
 import { useState } from "react";
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import Image from "next/image";
+import { Card, CardContent, CardFooter } from "../../../components copy/ui/card";
+import { Dialog, DialogContent, DialogTrigger } from "../../../components copy/ui/dialog";
+
 
 const certificates = [
 
@@ -68,7 +68,7 @@ export default function CertificateGallery() {
                             >
                                 <CardContent className="p-0">
                                     <div className="relative w-full h-48">
-                                        <Image
+                                        <img
                                             src={cert.src}
                                             alt={cert.alt}
                                             fill
@@ -85,7 +85,7 @@ export default function CertificateGallery() {
                         {selectedImage && selectedImage.id === cert.id && (
                             <DialogContent className="max-w-3xl p-0 border-0 bg-transparent">
                                 <div className="relative w-full h-[60vh]">
-                                    <Image
+                                    <img
                                         src={selectedImage.src}
                                         alt={selectedImage.alt}
                                         fill

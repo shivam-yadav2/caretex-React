@@ -1,10 +1,10 @@
 // app/page.tsx
 'use client';
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../.././';
-import { Card, CardContent, CardHeader, CardTitle } from 'components/ui/card';
-import { Avatar, AvatarFallback, AvatarImage } from 'components/ui/avatar';
-import { Badge } from 'components/ui/badge';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../../components copy/ui/tabs';
+import { Card, CardContent, CardHeader, CardTitle } from '../../../components copy/ui/card';
+import { Avatar, AvatarFallback, AvatarImage } from '../../../components copy/ui/avatar';
+import { Badge } from '../../../components copy/ui/badge';
 import AboutSection from '../HomeSection/AboutSection';
 import CertificateGallery from '../Gallery/CertificateGallery';
 // import { CertificateIcon } from 'lucide-react';
