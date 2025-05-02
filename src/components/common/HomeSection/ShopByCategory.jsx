@@ -4,7 +4,7 @@ import { gsap } from "gsap";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-// import { supabaseClient } from "../../../utlis/SupabaseClient";
+import { supabaseClient } from "../../../utlis/SupabaseClient";
 
 const ShopByCategory = () => {
   const [activeCategory, setActiveCategory] = useState(null); // Initialize as null to avoid invalid initial state
@@ -12,52 +12,52 @@ const ShopByCategory = () => {
   const [products, setProducts] = useState([]);
   const sliderRef = useRef(null);
 
-  // useEffect(() => {
-  //   const fetchCategories = async () => {
-  //     // Fetch categories with subcategories
-  //     const { data: categories, error: categoryError } = await supabaseClient
-  //       .from("categories")
-  //       .select(`id, name, subcategories:categories(id, name)`)
-  //       .is("parent_id", null)
-  //       .order("created_at", { ascending: true });
+  useEffect(() => {
+    const fetchCategories = async () => {
+      // Fetch categories with subcategories
+      const { data: categories, error: categoryError } = await supabaseClient
+        .from("categories")
+        .select(`id, name, subcategories:categories(id, name)`)
+        .is("parent_id", null)
+        .order("created_at", { ascending: true });
 
-  //     if (categoryError) {
-  //       console.error("Error fetching categories:", categoryError);
-  //       return;
-  //     }
+      if (categoryError) {
+        console.error("Error fetching categories:", categoryError);
+        return;
+      }
 
-  //     // Extract all subcategory IDs
-  //     const subcategoryIds = categories
-  //       .flatMap((category) => category.subcategories)
-  //       .map((sub) => sub.id);
+      // Extract all subcategory IDs
+      const subcategoryIds = categories
+        .flatMap((category) => category.subcategories)
+        .map((sub) => sub.id);
 
-  //     // Fetch products related to subcategories
-  //     let products = [];
-  //     if (subcategoryIds.length > 0) {
-  //       const { data: productData, error: productError } = await supabaseClient
-  //         .from("product")
-  //         .select("*")
-  //         .in("sub_cate_id", subcategoryIds)
-  //         .order("created_at", { ascending: true });
-  //       if (productError) {
-  //         console.error("Error fetching products:", productError);
-  //       } else {
-  //         products = productData;
-  //       }
-  //     }
+      // Fetch products related to subcategories
+      let products = [];
+      if (subcategoryIds.length > 0) {
+        const { data: productData, error: productError } = await supabaseClient
+          .from("product")
+          .select("*")
+          .in("sub_cate_id", subcategoryIds)
+          .order("created_at", { ascending: true });
+        if (productError) {
+          console.error("Error fetching products:", productError);
+        } else {
+          products = productData;
+        }
+      }
 
-  //     // Set state with categories and products
-  //     setCategories(categories);
-  //     setProducts(products);
+      // Set state with categories and products
+      setCategories(categories);
+      setProducts(products);
 
-  //     // Set the first category as active if categories exist
-  //     if (categories.length > 0) {
-  //       setActiveCategory(categories[0].name);
-  //     }
-  //   };
+      // Set the first category as active if categories exist
+      if (categories.length > 0) {
+        setActiveCategory(categories[0].name);
+      }
+    };
 
-  //   fetchCategories();
-  // }, []);
+    fetchCategories();
+  }, []);
 
   useEffect(() => {
     if (sliderRef.current && products.length > 0) {

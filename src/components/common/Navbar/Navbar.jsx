@@ -1,11 +1,9 @@
-
-
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FiMenu } from "react-icons/fi";
 import { AiOutlineClose } from "react-icons/ai";
 import RightArrow from "../../../utlis/RightArrow";
-// import { supabaseClient } from "../../../utlis/SupabaseClient";
+import { supabaseClient } from "../../../utlis/SupabaseClient";
 
 function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -24,23 +22,23 @@ function Navbar() {
   }, []);
 
   // Fetch categories from Supabase
-  // useEffect(() => {
-  //   const fetchCategories = async () => {
-  //     try {
-  //       const { data, error } = await supabaseClient
-  //         .from("categories")
-  //         .select("id, name, subcategories:categories(id, name)")
-  //         .is("parent_id", null)
-  //         .order("created_at", { ascending: true });
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const { data, error } = await supabaseClient
+          .from("categories")
+          .select("id, name, subcategories:categories(id, name)")
+          .is("parent_id", null)
+          .order("created_at", { ascending: true });
 
-  //       if (error) throw error;
-  //       setCategories(data || []);
-  //     } catch (error) {
-  //       console.error("Failed to fetch categories:", error);
-  //     }
-  //   };
-  //   fetchCategories();
-  // }, []);
+        if (error) throw error;
+        setCategories(data || []);
+      } catch (error) {
+        console.error("Failed to fetch categories:", error);
+      }
+    };
+    fetchCategories();
+  }, []);
 
   // Close sidebar when clicking outside
   useEffect(() => {
@@ -55,15 +53,18 @@ function Navbar() {
 
   // Toggle mobile category expansion
   const toggleMobileCategory = (categoryName) => {
-    setOpenMobileCategory(openMobileCategory === categoryName ? null : categoryName);
+    setOpenMobileCategory(
+      openMobileCategory === categoryName ? null : categoryName
+    );
   };
 
   return (
     <>
       {/* Header */}
       <header
-        className={`fixed top-0 left-0 w-full bg-gray-900 text-white py-2 px-4 z-50 transition-shadow duration-300 ${isScrolled ? "shadow-lg" : ""
-          }`}
+        className={`fixed top-0 left-0 w-full bg-gray-900 text-white py-2 px-4 z-50 transition-shadow duration-300 ${
+          isScrolled ? "shadow-lg" : ""
+        }`}
       >
         <div className="max-w-screen-xl mx-auto flex flex-col md:flex-row items-center justify-between">
           <div className="flex flex-wrap items-center gap-2">
@@ -78,7 +79,7 @@ function Navbar() {
             </p>
             <p className="flex items-center gap-2 text-sm">
               <a
-                href="https://wa.me/+917800311945"
+                to="https://wa.me/+917800311945"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2"
@@ -93,10 +94,7 @@ function Navbar() {
               </a>
             </p>
             <p className="flex items-center gap-2 text-sm">
-              <a
-                href="tel:+918076356808"
-                className="flex items-center gap-2"
-              >
+              <a to="tel:+918076356808" className="flex items-center gap-2">
                 <img
                   width={25}
                   height={25}
@@ -125,11 +123,12 @@ function Navbar() {
 
       {/* Sticky Navbar */}
       <div
-        className={`sticky top-[70px] lg:top-[30px] bg-white shadow-md z-40 transition-shadow duration-300 ${isScrolled ? "shadow-lg" : ""
-          }`}
+        className={`sticky top-[70px] lg:top-[30px] bg-white shadow-md z-40 transition-shadow duration-300 ${
+          isScrolled ? "shadow-lg" : ""
+        }`}
       >
         <div className="max-w-screen-xl mx-auto flex items-center justify-between py-3 px-6">
-          <Link href="/">
+          <Link to="/">
             <img
               alt="CareTex logo"
               className="w-[100px] lg:w-[150px]"
@@ -140,7 +139,7 @@ function Navbar() {
             <ul className="flex space-x-6">
               <li>
                 <Link
-                  href="/"
+                  to="/"
                   className="text-lg font-semibold text-black hover:text-[#f59f8b]"
                 >
                   Home
@@ -182,11 +181,11 @@ function Navbar() {
                               className="px-4 py-2 hover:bg-[#f59f8b] hover:text-white"
                             >
                               <Link
-                                href={`/${category.name
+                                to={`/${category.name
                                   .toLowerCase()
                                   .replace(/\s+/g, "-")}/${sub.name
-                                    .toLowerCase()
-                                    .replace(/\s+/g, "-")}?subId=${sub.id}`}
+                                  .toLowerCase()
+                                  .replace(/\s+/g, "-")}?subId=${sub.id}`}
                               >
                                 {sub.name}
                               </Link>
@@ -200,7 +199,7 @@ function Navbar() {
               </li>
               <li>
                 <Link
-                  href="/about-us"
+                  to={"/about-us"}
                   className="text-lg font-semibold text-black hover:text-[#f59f8b]"
                 >
                   About Us
@@ -208,7 +207,7 @@ function Navbar() {
               </li>
               <li>
                 <Link
-                  href="/contact-us"
+                  to="/contact-us"
                   className="text-lg font-semibold text-black hover:text-[#f59f8b]"
                 >
                   Contact Us
@@ -230,8 +229,9 @@ function Navbar() {
 
       {/* Sidebar Menu (Mobile) */}
       <div
-        className={`sidebar fixed inset-0 bg-black/50 transform ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"
-          } transition-transform duration-300 w-3/4 max-w-sm bg-white p-6 shadow-lg z-50`}
+        className={`sidebar fixed inset-0 bg-black/50 transform ${
+          isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+        } transition-transform duration-300 w-3/4 max-w-sm bg-white p-6 shadow-lg z-50`}
       >
         <button
           className="absolute top-4 right-4 text-2xl"
@@ -243,7 +243,7 @@ function Navbar() {
         <ul className="space-y-4 mt-8">
           <li>
             <Link
-              href="/"
+              to="/"
               className="text-lg font-semibold text-black"
               onClick={() => setIsSidebarOpen(false)}
             >
@@ -286,11 +286,11 @@ function Navbar() {
                           className="px-4 py-2 hover:bg-[#f59f8b] hover:text-white"
                         >
                           <Link
-                            href={`/${category.name
+                            to={`/${category.name
                               .toLowerCase()
                               .replace(/\s+/g, "-")}/${sub.name
-                                .toLowerCase()
-                                .replace(/\s+/g, "-")}?subId=${sub.id}`}
+                              .toLowerCase()
+                              .replace(/\s+/g, "-")}?subId=${sub.id}`}
                           >
                             {sub.name}
                           </Link>
@@ -304,7 +304,7 @@ function Navbar() {
           </li>
           <li>
             <Link
-              href="/about-us"
+              to="/about-us"
               className="text-lg font-semibold text-black"
               onClick={() => setIsSidebarOpen(false)}
             >
@@ -313,7 +313,7 @@ function Navbar() {
           </li>
           <li>
             <Link
-              href="/contact-us"
+              to="/contact-us"
               className="text-lg font-semibold text-black"
               onClick={() => setIsSidebarOpen(false)}
             >
