@@ -1,4 +1,4 @@
-"use client";
+
 import React, { Suspense, useEffect, useState } from "react";
 import Footer from "../components/common/Footer/Footer";
 import PageHeader from "../components/common/PageHeader/PageHeader";
