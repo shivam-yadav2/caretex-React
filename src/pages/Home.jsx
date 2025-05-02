@@ -12,7 +12,7 @@ import HomeSlider from "../components/common/HomeSlider/HomePageSlider";
 
 const Home = () => {
     return (
-        <Layout>
+        <>
             <HomeSlider />
             {/* <HomeContact /> */}
             <AboutSection />
@@ -21,7 +21,7 @@ const Home = () => {
             <ProductCatalogue />
             <OurPartners />
             <MapSection />
-        </Layout>
+        </>
     )
 }
 
