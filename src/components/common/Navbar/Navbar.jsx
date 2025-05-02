@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { FiMenu } from "react-icons/fi";
 import { AiOutlineClose } from "react-icons/ai";
 import RightArrow from "../../../utlis/RightArrow";
-import { supabaseClient } from "../../../utlis/SupabaseClient";
+// import { supabaseClient } from "../../../utlis/SupabaseClient";
 
 function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -24,23 +24,23 @@ function Navbar() {
   }, []);
 
   // Fetch categories from Supabase
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const { data, error } = await supabaseClient
-          .from("categories")
-          .select("id, name, subcategories:categories(id, name)")
-          .is("parent_id", null)
-          .order("created_at", { ascending: true });
+  // useEffect(() => {
+  //   const fetchCategories = async () => {
+  //     try {
+  //       const { data, error } = await supabaseClient
+  //         .from("categories")
+  //         .select("id, name, subcategories:categories(id, name)")
+  //         .is("parent_id", null)
+  //         .order("created_at", { ascending: true });
 
-        if (error) throw error;
-        setCategories(data || []);
-      } catch (error) {
-        console.error("Failed to fetch categories:", error);
-      }
-    };
-    fetchCategories();
-  }, []);
+  //       if (error) throw error;
+  //       setCategories(data || []);
+  //     } catch (error) {
+  //       console.error("Failed to fetch categories:", error);
+  //     }
+  //   };
+  //   fetchCategories();
+  // }, []);
 
   // Close sidebar when clicking outside
   useEffect(() => {

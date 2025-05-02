@@ -156,7 +156,7 @@ function PageContent() {
 
     return (
         <>
-            <Navbar />
+            {/* <Navbar /> */}
             <PageHeader
                 title={product?.[1] || "Category"}
                 backgroundImage={"/assets/slider4.jpg"}
