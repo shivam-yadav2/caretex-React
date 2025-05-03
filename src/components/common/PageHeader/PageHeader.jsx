@@ -19,7 +19,7 @@ const PageHeader = ({ title, backgroundImage, breadcrumbs }) => {
 
               {/* Breadcrumbs */}
               <ul className="flex justify-center items-center space-x-2 text-sm md:text-base mt-4">
-                {breadcrumbs.map((breadcrumb, index) => (
+                {breadcrumbs?.map((breadcrumb, index) => (
                   <li key={index} className="flex items-center">
                     {breadcrumb.icon && (
                       <span className="mr-2 text-gray-300">

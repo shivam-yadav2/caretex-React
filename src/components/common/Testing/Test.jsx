@@ -11,7 +11,7 @@ import {
 } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { StarIcon } from "@heroicons/react/20/solid";
-import "react-inner-image-zoom/lib/InnerImageZoom/styles.css";
+// import "react-inner-image-zoom/lib/InnerImageZoom/styles.css";
 import { InnerImageZoom } from "react-inner-image-zoom";
 
 const product = {
