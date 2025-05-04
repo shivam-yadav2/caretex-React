@@ -5,6 +5,7 @@ import MapSection from "../components/common/HomeSection/MapSection";
 import Footer from "../components/common/Footer/Footer";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
+import contact_us from "../assets/slider4.jpg";
 
 const Contact = () => {
   // State for form fields
@@ -98,7 +99,7 @@ const Contact = () => {
       <Navbar />
       <PageHeader
         title={"Contact us"}
-        backgroundImage={"/assets/slider4.jpg"}
+        backgroundImage={contact_us}
         breadcrumbs={[]}
       />
       <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 p-[5rem]">

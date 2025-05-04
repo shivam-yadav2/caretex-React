@@ -10,7 +10,7 @@ const PageHeader = ({ title, backgroundImage, breadcrumbs }) => {
           ></div>
 
           {/* Overlay for better text visibility */}
-          <div className="absolute inset-0 bg-black bg-opacity-50"></div>
+          <div className="absolute inset-0 bg-opacity-50"></div>
 
           <div className="container mx-auto relative z-10 flex justify-center items-center min-h-[300px] md:min-h-[400px]">
             <div className="text-center text-white px-4">

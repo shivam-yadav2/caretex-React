@@ -93,9 +93,6 @@ const ShopByCategory = () => {
     return activeSubcategoryIds.includes(product.sub_cate_id);
   });
 
-  console.log("Categories:", categories);
-  console.log("All Products:", products);
-  console.log("Filtered Products:", filteredProducts);
 
   return (
     <div className="bg-gray-100 py-8">

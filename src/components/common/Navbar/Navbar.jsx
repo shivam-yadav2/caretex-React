@@ -11,6 +11,9 @@ function Navbar() {
   const [activeCategory, setActiveCategory] = useState(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [openMobileCategory, setOpenMobileCategory] = useState(null);
+  // MOBILE STATE
+  const [openMobileProducts, setOpenMobileProducts] = useState(false);
+  const [openMobileSubCatId, setOpenMobileSubCatId] = useState(null);
 
   // Handle scroll effect for sticky navbar shadow
   useEffect(() => {
@@ -41,22 +44,36 @@ function Navbar() {
   }, []);
 
   // Close sidebar when clicking outside
+  // Close sidebar when clicking outside
   useEffect(() => {
+    if (!isSidebarOpen) return;
+
     const handleOutsideClick = (e) => {
-      if (isSidebarOpen && !e.target.closest(".sidebar")) {
+      // if clicking anywhere that's not inside the sidebar, close it
+      if (sidebarRef.current && !sidebarRef.current.contains(e.target)) {
         setIsSidebarOpen(false);
       }
     };
-    document.addEventListener("click", handleOutsideClick);
-    return () => document.removeEventListener("click", handleOutsideClick);
+
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
   }, [isSidebarOpen]);
 
   // Toggle mobile category expansion
-  const toggleMobileCategory = (categoryName) => {
+  const toggleMobileCategory = (categoryKey) => {
     setOpenMobileCategory(
-      openMobileCategory === categoryName ? null : categoryName
+      openMobileCategory === categoryKey ? null : categoryKey
     );
   };
+
+    const handleCloseSidebar = () => {
+      setIsSidebarOpen(false);
+      setOpenMobileProducts(false);
+      setOpenMobileSubCatId(null);
+    };
+
 
   return (
     <>
@@ -226,87 +243,107 @@ function Navbar() {
           </div>
         </div>
       </div>
-
-      {/* Sidebar Menu (Mobile) */}
-      <div
-        className={`sidebar fixed inset-0 bg-black/50 transform ${
-          isSidebarOpen ? "translate-x-0" : "-translate-x-full"
-        } transition-transform duration-300 w-3/4 max-w-sm bg-white p-6 shadow-lg z-50`}
-      >
-        <button
-          className="absolute top-4 right-4 text-2xl"
+      {isSidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black/50 z-40"
           onClick={() => setIsSidebarOpen(false)}
-          aria-label="Close menu"
-        >
-          <AiOutlineClose />
-        </button>
-        <ul className="space-y-4 mt-8">
+        />
+      )}
+      {/* Sidebar Menu (Mobile) */}
+      <aside
+        className={`fixed top-0 left-0 bottom-0 w-3/4 max-w-xs bg-white z-50 transform transition-transform duration-300 ${
+          isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
+      >
+        <div className="flex items-center justify-between p-4 border-b">
+          <h2 className="text-lg font-semibold">Menu</h2>
+          <button
+            type="button"
+            onClick={() => setIsSidebarOpen(false)}
+            aria-label="Close menu"
+          >
+            <AiOutlineClose className="text-2xl" />
+          </button>
+        </div>
+        <ul className="p-4 space-y-4">
           <li>
             <Link
               to="/"
-              className="text-lg font-semibold text-black"
               onClick={() => setIsSidebarOpen(false)}
+              className="block font-medium"
             >
               Home
             </Link>
           </li>
-          <li className="relative group">
-            <button className="flex items-center gap-1 text-lg font-semibold text-black hover:text-[#f59f8b]">
+          <li>
+            <button
+              onClick={() => {
+                setOpenMobileProducts((p) => !p);
+                if (openMobileProducts) setOpenMobileSubCatId(null);
+              }}
+              className="w-full flex justify-between items-center font-medium"
+            >
               Products
-              <svg
-                className="w-3 h-3"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 12 7.41"
-              >
-                <path
-                  d="M16.59,8.59,12,13.17,7.41,8.59,6,10l6,6,6-6Z"
-                  transform="translate(-6 -8.59)"
-                  fill="currentColor"
-                  opacity="0.7"
-                />
-              </svg>
+              <RightArrow
+                width={16}
+                height={16}
+                className={`transform transition-transform ${
+                  openMobileProducts ? "rotate-90" : ""
+                }`}
+              />
             </button>
-            <ul className="absolute left-0 w-[250px] mt-2 bg-white text-black rounded shadow-lg opacity-0 invisible translate-y-3 transition-all duration-300 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 z-10">
-              {categories.map((category) => (
-                <li
-                  key={category.id}
-                  className="relative group/sub px-4 py-2 hover:bg-[#f59f8b] hover:text-white"
-                  onClick={() => setActiveCategory(category.name)}
-                  onMouseLeave={() => setActiveCategory(null)}
-                >
-                  <button className="w-full text-left flex justify-between items-center">
-                    {category.name}
-                    <RightArrow width={20} height={20} />
-                  </button>
-                  {activeCategory === category.name && (
-                    <ul className="absolute left-[50px] z-20 top-0 w-[200px] bg-white text-black rounded shadow-lg transition-all duration-300">
-                      {category.subcategories.map((sub) => (
-                        <li
-                          key={sub.id}
-                          className="px-4 py-2 hover:bg-[#f59f8b] hover:text-white"
-                        >
-                          <Link
-                            to={`/${category.name
-                              .toLowerCase()
-                              .replace(/\s+/g, "-")}/${sub.name
-                              .toLowerCase()
-                              .replace(/\s+/g, "-")}?subId=${sub.id}`}
-                          >
-                            {sub.name}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </li>
-              ))}
-            </ul>
+
+            {openMobileProducts && (
+              <ul className="mt-2 pl-4 space-y-2">
+                {categories.map((cat) => (
+                  <li key={cat.id}>
+                    <button
+                      onClick={() =>
+                        setOpenMobileSubCatId((prev) =>
+                          prev === cat.id ? null : cat.id
+                        )
+                      }
+                      className="w-full flex justify-between items-center"
+                    >
+                      {cat.name}
+                      <RightArrow
+                        width={14}
+                        height={14}
+                        className={`transform transition-transform ${
+                          openMobileSubCatId === cat.id ? "rotate-90" : ""
+                        }`}
+                      />
+                    </button>
+
+                    {openMobileSubCatId === cat.id && (
+                      <ul className="mt-1 pl-4 space-y-1">
+                        {cat.subcategories.map((sub) => (
+                          <li key={sub.id}>
+                            <Link
+                              onClick={handleCloseSidebar}
+                              to={`/${cat.name
+                                .toLowerCase()
+                                .replace(/\s+/g, "-")}/${sub.name
+                                .toLowerCase()
+                                .replace(/\s+/g, "-")}?subId=${sub.id}`}
+                              className="block"
+                            >
+                              {sub.name}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            )}
           </li>
           <li>
             <Link
               to="/about-us"
-              className="text-lg font-semibold text-black"
               onClick={() => setIsSidebarOpen(false)}
+              className="block font-medium"
             >
               About Us
             </Link>
@@ -314,14 +351,14 @@ function Navbar() {
           <li>
             <Link
               to="/contact-us"
-              className="text-lg font-semibold text-black"
               onClick={() => setIsSidebarOpen(false)}
+              className="block font-medium"
             >
               Contact Us
             </Link>
           </li>
         </ul>
-      </div>
+      </aside>
     </>
   );
 }
