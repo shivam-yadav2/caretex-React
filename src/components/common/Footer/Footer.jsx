@@ -51,12 +51,13 @@ function Footer() {
                 <div>
                     <h3 className="text-lg font-semibold mb-3">Get In Touch</h3>
                     <p>
-                        <span className="font-semibold">📞</span> +91-9876543210, 1800-123-4567
+                        <span className="font-semibold">📞</span> +91-7800311945, +91 522-4004633
                     </p>
                     <p>
-                        <span className="font-semibold">✉</span> support@caretex.com
+                        <span className="font-semibold">✉</span> caretexaid@gmail.com
+                        <span className="font-semibold">✉</span> institute.caretex@gmail.com
                     </p>
-                    
+
                 </div>
             </div>
             <div className="text-center text-sm mt-6 border-t border-gray-700 pt-4">

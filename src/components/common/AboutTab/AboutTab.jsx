@@ -22,7 +22,7 @@ export default function AboutPage() {
                         >
                             About Us
                         </TabsTrigger>
-                        <TabsTrigger
+                        {/* <TabsTrigger
                             value="founders"
                             className="w-full text-left py-3 px-4 rounded-md data-[state=active]:bg-primary data-[state=active]:text-white"
                         >
@@ -33,7 +33,7 @@ export default function AboutPage() {
                             className="w-full text-left py-3 px-4 rounded-md data-[state=active]:bg-primary data-[state=active]:text-white"
                         >
                             Our Achievements
-                        </TabsTrigger>
+                        </TabsTrigger> */}
                         <TabsTrigger
                             value="certificates"
                             className="w-full text-left py-3 px-4 rounded-md data-[state=active]:bg-primary data-[state=active]:text-white"

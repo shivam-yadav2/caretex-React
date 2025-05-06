@@ -60,7 +60,7 @@ const CounterSection = () => {
               </span>
               +
             </h3>
-            <p className="text-sm lg:text-base">Presence In State's</p>
+            <p className="text-sm lg:text-base">Presence In States</p>
           </div>
 
           {/* Active Clients */}
