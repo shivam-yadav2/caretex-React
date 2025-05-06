@@ -116,24 +116,24 @@ const handleSubmit = async (e) => {
             <h3 className="text-2xl font-bold">Get In Touch</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {/* Phone */}
-              <div className="flex items-start gap-4 p-4 bg-gray-50 rounded-lg">
-                <svg /* …icon attrs… */>…</svg>
+              <div className="flex items-start gap-4 p-4 justify-center bg-gray-50 rounded-lg">
+                
                 <div>
                   <h4 className="font-semibold mb-1">Phone</h4>
                   <p>+91 0522-4004633</p>
                 </div>
               </div>
               {/* Email */}
-              <div className="flex items-start gap-4 p-4 bg-gray-50 rounded-lg">
-                <svg /* …icon attrs… */>…</svg>
+              <div className="flex items-start gap-4 p-4 justify-center bg-gray-50 rounded-lg">
+                
                 <div>
                   <h4 className="font-semibold mb-1">Email</h4>
                   <p>caretexaid@gmail.com</p>
                 </div>
               </div>
               {/* WhatsApp */}
-              <div className="flex items-start gap-4 p-4 bg-gray-50 rounded-lg">
-                <svg /* …icon attrs… */>…</svg>
+              <div className="flex items-start gap-4 p-4 justify-center bg-gray-50 rounded-lg">
+                
                 <div>
                   <h4 className="font-semibold mb-1">WhatsApp No.</h4>
                   <p>+91 7800311945</p>
