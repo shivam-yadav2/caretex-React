@@ -1,6 +1,8 @@
 import React from "react";
 import Layout from "../layout/Layout";
 import Navbar from "../components/common/Navbar/Navbar";
+// import Footer from "../components/common/Footer/Footer";
+
 import PageHeader from "../components/common/PageHeader/PageHeader";
 import AboutSection from "../components/common/HomeSection/AboutSection";
 import CounterSection from "../components/common/HomeSection/CounterSection";
@@ -26,6 +28,8 @@ const About = () => {
       <CounterSection />
       <OurPartners />
       <MapSection />
+      <Footer />
+
     </Layout>
   );
 };
