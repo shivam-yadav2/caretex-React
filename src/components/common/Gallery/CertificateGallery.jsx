@@ -1,54 +1,49 @@
-// app/components/assets/CertificateGallery.jsx
-
-
 import { useState } from "react";
 import { Card, CardContent, CardFooter } from "../../../components copy/ui/card";
 import { Dialog, DialogContent, DialogTrigger } from "../../../components copy/ui/dialog";
 
-
 const certificates = [
-
     {
-        "id": 2,
-        "title": "Food and Drug Administration",
-        "src": "/assets/page-0001.jpg",
-        "alt": "Food and Drug Administration"
+        id: 1,
+        title: "Ce Certificate",
+        src: "/assets/MFG-page-00.jpg",
+        alt: "Ce Certificate"
     },
     {
-        "id": 3,
-        "title": "GST Certificate MFG",
-        "src": "/assets/NEW_page-001.jpg",
-        "alt": "GST Certificate MFG"
+        id: 2,
+        title: "Food and Drug Administration",
+        src: "/assets/page-0001.jpg",
+        alt: "Food and Drug Administration"
     },
     {
-        "id": 4,
-        "title": "GST Certificate MFG",
-        "src": "/assets/NEW_page-003.jpg",
-        "alt": "GST Certificate MFG"
+        id: 3,
+        title: "GST Certificate MFG",
+        src: "/assets/NEW_page-001.jpg",
+        alt: "GST Certificate MFG"
     },
     {
-        "id": 5,
-        "title": "ISO Manufacturing G Certificate",
-        "src": "/assets/MFG_page-00...jpg",
-        "alt": "ISO Manufacturing G Certificate"
+        id: 4,
+        title: "GST Certificate MFG",
+        src: "/assets/NEW_page-003.jpg",
+        alt: "GST Certificate MFG"
     },
     {
-        "id": 6,
-        "title": "Trade Mark Certificate",
-        "src": "/assets/1.jpg",
-        "alt": "Trade Mark Certificate"
+        id: 5,
+        title: "ISO Manufacturing G Certificate",
+        src: "/assets/ISO MANUFACTURING CERTIFICATE (MFG)_page-0001.jpg",
+        alt: "ISO Manufacturing G Certificate"
     },
     {
-        "id": 7,
-        "title": "Udyam Registration Certificate",
-        "src": "/assets/06.09.2023 MS...jpg",
-        "alt": "Udyam Registration Certificate"
+        id: 6,
+        title: "Trade Mark Certificate",
+        src: "/assets/1.jpg",
+        alt: "Trade Mark Certificate"
     },
     {
-        "id": 1,
-        "title": "Ce Certificate",
-        "src": "/assets/MFG_page-000.jpg",
-        "alt": "Ce Certificate"
+        id: 7,
+        title: "Udyam Registration Certificate",
+        src: "/assets/06.09.2023 MS...jpg",
+        alt: "Udyam Registration Certificate"
     }
 ];
 
@@ -58,22 +53,23 @@ export default function CertificateGallery() {
     return (
         <div className="container mx-auto py-12">
             <h1 className="text-4xl font-bold text-center mb-12">Our Certificates</h1>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3  gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                 {certificates.map((cert) => (
-                    <Dialog key={cert.id}>
+                    <Dialog key={cert.id} onOpenChange={(open) => open && setSelectedImage(cert)}>
                         <DialogTrigger asChild>
                             <Card
                                 className="cursor-pointer hover:shadow-lg transition-shadow"
-                                onClick={() => setSelectedImage(cert)}
+                                role="button"
+                                tabIndex={0}
+                                onKeyDown={(e) => e.key === 'Enter' && setSelectedImage(cert)}
                             >
                                 <CardContent className="p-0">
-                                    <div className="relative w-full h-48">
+                                    <div className="relative w-full h-48 overflow-hidden">
                                         <img
                                             src={cert.src}
                                             alt={cert.alt}
-                                            fill
-                                            className="object-cover rounded-t-lg"
-                                            sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                                            className="w-full h-full object-cover rounded-t-lg"
+                                            style={{ width: '100%', height: '100%' }}
                                         />
                                     </div>
                                 </CardContent>
@@ -82,19 +78,16 @@ export default function CertificateGallery() {
                                 </CardFooter>
                             </Card>
                         </DialogTrigger>
-                        {selectedImage && selectedImage.id === cert.id && (
-                            <DialogContent className="max-w-3xl p-0 border-0 bg-transparent">
-                                <div className="relative w-full h-[60vh]">
-                                    <img
-                                        src={selectedImage.src}
-                                        alt={selectedImage.alt}
-                                        fill
-                                        className="object-contain rounded-lg"
-                                        sizes="(max-width: 768px) 90vw, 80vw"
-                                    />
-                                </div>
-                            </DialogContent>
-                        )}
+                        <DialogContent className="max-w-3xl p-0 border-0 bg-transparent">
+                            <div className="relative w-full h-[60vh]">
+                                <img
+                                    src={selectedImage?.src}
+                                    alt={selectedImage?.alt}
+                                    className="w-full h-full object-contain rounded-lg"
+                                    style={{ width: '100%', height: '100%' }}
+                                />
+                            </div>
+                        </DialogContent>
                     </Dialog>
                 ))}
             </div>

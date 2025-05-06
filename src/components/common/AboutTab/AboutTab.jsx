@@ -23,19 +23,19 @@ import AboutSection from "../HomeSection/AboutSection";
 import CertificateGallery from "../Gallery/CertificateGallery";
 
 export default function AboutPage() {
-    return (
-        <div className="min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
-            <div className="max-w-7xl mx-auto">
-                <Tabs defaultValue="about-us" className="flex flex-col md:flex-row gap-6">
-                    {/* Vertical Tabs List */}
-                    <TabsList className="flex flex-col w-full md:w-1/4 bg-white p-4 rounded-lg shadow-md h-fit">
-                        <TabsTrigger
-                            value="about-us"
-                            className="w-full text-left py-3 px-4 rounded-md data-[state=active]:bg-primary data-[state=active]:text-white"
-                        >
-                            About Us
-                        </TabsTrigger>
-                        {/* <TabsTrigger
+  return (
+    <div className="min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto">
+        <Tabs defaultValue="about-us" className="flex flex-col md:flex-row gap-6">
+          {/* Vertical Tabs List */}
+          <TabsList className="flex flex-col w-full md:w-1/4 bg-white p-4 rounded-lg shadow-md h-fit">
+            <TabsTrigger
+              value="about-us"
+              className="w-full text-left py-3 px-4 rounded-md data-[state=active]:bg-primary data-[state=active]:text-white"
+            >
+              About Us
+            </TabsTrigger>
+            {/* <TabsTrigger
                             value="founders"
                             className="w-full text-left py-3 px-4 rounded-md data-[state=active]:bg-primary data-[state=active]:text-white"
                         >
@@ -47,13 +47,13 @@ export default function AboutPage() {
                         >
                             Our Achievements
                         </TabsTrigger> */}
-                        <TabsTrigger
-                            value="certificates"
-                            className="w-full text-left py-3 px-4 rounded-md data-[state=active]:bg-primary data-[state=active]:text-white"
-                        >
-                            Certificates
-                        </TabsTrigger>
-                    </TabsList>
+            <TabsTrigger
+              value="certificates"
+              className="w-full text-left py-3 px-4 rounded-md data-[state=active]:bg-primary data-[state=active]:text-white"
+            >
+              Certificates
+            </TabsTrigger>
+          </TabsList>
 
           {/* Tabs Content */}
           <div className="w-full md:w-3/4">
