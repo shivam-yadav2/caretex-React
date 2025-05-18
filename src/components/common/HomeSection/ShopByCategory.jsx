@@ -1,23 +1,23 @@
-
 import { useState, useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { supabaseClient } from "../../../utlis/SupabaseClient";
+import Example from "../Testing/Test";
 
 const ShopByCategory = () => {
-  const [activeCategory, setActiveCategory] = useState(null); // Initialize as null to avoid invalid initial state
+  const [activeCategory, setActiveCategory] = useState(null);
   const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
   const sliderRef = useRef(null);
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
   useEffect(() => {
     const fetchCategories = async () => {
-      // Fetch categories with subcategories
       const { data: categories, error: categoryError } = await supabaseClient
         .from("categories")
-        .select(`id, name, subcategories:categories(id, name)`)
+        .select(`id, name,slug, subcategories:categories(*)`)
         .is("parent_id", null)
         .order("created_at", { ascending: true });
 
@@ -26,12 +26,10 @@ const ShopByCategory = () => {
         return;
       }
 
-      // Extract all subcategory IDs
       const subcategoryIds = categories
-        .flatMap((category) => category.subcategories)
+        .flatMap((category) => category.subcategories || [])
         .map((sub) => sub.id);
 
-      // Fetch products related to subcategories
       let products = [];
       if (subcategoryIds.length > 0) {
         const { data: productData, error: productError } = await supabaseClient
@@ -39,6 +37,7 @@ const ShopByCategory = () => {
           .select("*")
           .in("sub_cate_id", subcategoryIds)
           .order("created_at", { ascending: true });
+
         if (productError) {
           console.error("Error fetching products:", productError);
         } else {
@@ -46,13 +45,12 @@ const ShopByCategory = () => {
         }
       }
 
-      // Set state with categories and products
       setCategories(categories);
       setProducts(products);
 
-      // Set the first category as active if categories exist
+      // Set first category as active
       if (categories.length > 0) {
-        setActiveCategory(categories[0].name);
+        setActiveCategory(categories[0]);
       }
     };
 
@@ -60,8 +58,7 @@ const ShopByCategory = () => {
   }, []);
 
   useEffect(() => {
-    if (sliderRef.current && products.length > 0) {
-      // GSAP Animation for the slider
+    if (sliderRef.current && sliderRef.current.children.length > 0) {
       gsap.fromTo(
         sliderRef.current.children,
         { opacity: 0, x: 50 },
@@ -76,23 +73,18 @@ const ShopByCategory = () => {
     }
   }, [activeCategory, products]);
 
-  // Filter products based on activeCategory
   const filteredProducts = products.filter((product) => {
-    // Find the active category object
     const activeCategoryObj = categories.find(
-      (cat) => cat.name === activeCategory
+      (cat) => cat.id === activeCategory?.id
     );
     if (!activeCategoryObj) return false;
 
-    // Get subcategory IDs for the active category
-    const activeSubcategoryIds = activeCategoryObj.subcategories.map(
+    const activeSubcategoryIds = (activeCategoryObj.subcategories || []).map(
       (sub) => sub.id
     );
 
-    // Check if the product's sub_cate_id is in the active category's subcategories
     return activeSubcategoryIds.includes(product.sub_cate_id);
   });
-
 
   return (
     <div className="bg-gray-100 py-8">
@@ -104,12 +96,13 @@ const ShopByCategory = () => {
         <div className="overflow-x-auto flex justify-center gap-4 py-2 px-2 scrollbar-hide">
           {categories.map((category) => (
             <button
-              key={category.id} // Use unique id instead of name
-              className={`flex items-center space-x-2 px-4 py-2 text-sm font-medium rounded-lg shadow-md ${activeCategory === category.name
-                ? "bg-[#f59f8b] border border-[#e58674] text-white"
-                : "bg-white text-[#70292f]"
-                } transition hover:bg-[#e58674] hover:text-white whitespace-nowrap`}
-              onClick={() => setActiveCategory(category.name)}
+              key={category.id}
+              className={`flex items-center space-x-2 px-4 py-2 text-sm font-medium rounded-lg shadow-md ${
+                activeCategory?.id === category.id
+                  ? "bg-[#f59f8b] border border-[#e58674] text-white"
+                  : "bg-white text-[#70292f]"
+              } transition hover:bg-[#e58674] hover:text-white whitespace-nowrap`}
+              onClick={() => setActiveCategory(category)}
             >
               <span>{category.name}</span>
             </button>
@@ -118,6 +111,7 @@ const ShopByCategory = () => {
       </div>
 
       {/* Products */}
+      {console.log(activeCategory, "activeCategory")}
       <div className="container mx-auto px-4">
         <div
           ref={sliderRef}
@@ -126,9 +120,27 @@ const ShopByCategory = () => {
           {filteredProducts.length > 0 ? (
             filteredProducts.slice(0, 12).map((product) => (
               <div
-                key={product.id} // Use unique product id
+                key={product.id}
                 className="bg-white w-full shadow-lg rounded-lg p-4 text-center border-2 border-[#70292f] rounded-[3px_50px] shadow-[1px_1px_4px_#e58674]"
               >
+                <div className="flex items-center justify-end mb-2">
+                  <a
+                    href={`/${activeCategory?.slug}/${
+                      activeCategory?.subcategories.find(
+                        (sub) => sub.id === product.sub_cate_id
+                      )?.slug
+                    }?subId=${product.sub_cate_id}`}
+                  >
+                    <span className="bg-white-100 flex rounded-lg shadow-md bg-[#f59f8b] border border-[#e58674] text-xs font-medium px-2.5 py-0.5 rounded-sm text-white border border-[#f59f8b]-300">
+                      {
+                        activeCategory?.subcategories.find(
+                          (sub) => sub.id === product.sub_cate_id
+                        )?.slug
+                      }
+                    </span>
+                  </a>
+                </div>
+
                 <img
                   src={product.image_url}
                   alt={product.product_title}
@@ -140,7 +152,10 @@ const ShopByCategory = () => {
                 <div className="text-green-600 font-bold text-lg">
                   Rs. {product.price}
                 </div>
-                <button className="mt-4 px-4 py-2 bg-[#f59f8b] text-white rounded-lg text-sm hover:bg-[#e58674]">
+                <button
+                  className="mt-4 px-4 py-2 bg-[#f59f8b] text-white rounded-lg text-sm hover:bg-[#e58674]"
+                  onClick={() => setSelectedProduct(product)}
+                >
                   View Details
                 </button>
               </div>
@@ -152,6 +167,15 @@ const ShopByCategory = () => {
           )}
         </div>
       </div>
+
+      {/* Modal */}
+      {selectedProduct && (
+        <Example
+          isOpen={!!selectedProduct}
+          data={selectedProduct}
+          onClose={() => setSelectedProduct(null)}
+        />
+      )}
     </div>
   );
 };

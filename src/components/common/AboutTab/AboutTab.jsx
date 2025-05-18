@@ -31,7 +31,7 @@ export default function AboutPage() {
           <TabsList className="flex flex-col w-full md:w-1/4 bg-white p-4 rounded-lg shadow-md h-fit">
             <TabsTrigger
               value="about-us"
-              className="w-full text-left py-3 px-4 rounded-md data-[state=active]:bg-primary data-[state=active]:text-white"
+              className="w-full text-left py-3 px-4 rounded-md data-[state=active]:bg-[#000] data-[state=active]:text-white"
             >
               About Us
             </TabsTrigger>
@@ -49,7 +49,7 @@ export default function AboutPage() {
                         </TabsTrigger> */}
             <TabsTrigger
               value="certificates"
-              className="w-full text-left py-3 px-4 rounded-md data-[state=active]:bg-primary data-[state=active]:text-white"
+              className="w-full text-left py-3 px-4 rounded-md data-[state=active]:bg-[#000] data-[state=active]:text-white"
             >
               Certificates
             </TabsTrigger>

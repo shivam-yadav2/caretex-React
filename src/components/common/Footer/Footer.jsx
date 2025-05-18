@@ -18,11 +18,11 @@ function Footer() {
                 <div>
                     <h3 className="text-lg font-semibold mb-3">Quick Links</h3>
                     <nav className="flex flex-col space-y-2">
-                        <Link href="/about-us" className="hover:text-[#f59f8b]">About Us</Link>
-                        <Link href="/products" className="hover:text-[#f59f8b]">Our Products</Link>
+                        <Link to="/about-us" className="hover:text-[#f59f8b]">About Us</Link>
+                        {/* <Link to="/products" className="hover:text-[#f59f8b]">Our Products</Link> */}
                         {/* <Link href="/customer-reviews" className="hover:text-[#f59f8b]">Customer Reviews</Link> */}
                         {/* <Link href="/blog" className="hover:text-[#f59f8b]">Health Blog</Link> */}
-                        <Link href="/contact-us" className="hover:text-[#f59f8b]">Contact Us</Link>
+                        <Link to="/contact-us" className="hover:text-[#f59f8b]">Contact Us</Link>
                         <p className="mt-2">
                             <a
                                 href="/assets/pdf/catelogue.pdf"

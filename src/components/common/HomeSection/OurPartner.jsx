@@ -40,7 +40,7 @@ function OurPartners() {
                 "https://tabindia.org/PG/images/1642057750.gif",
                 "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0h8j3K-6xy15qmZkkYT6pqh89S_eAx3KF1A&s",
                 "https://healthhelpline.com.np/assets/upload/clinic-img/SHREE_BIRENDRA_HOSPITAL.jpg",
-                "/assets/military.jpg"
+                // "/assets/military.jpg"
               ].map((src, index) => (
                 <img
                   key={index}
@@ -71,14 +71,14 @@ function OurPartners() {
           </div>
 
           {/* Call-to-Action Button */}
-          <div className="text-center mt-10">
+          {/* <div className="text-center mt-10">
             <Link
               href="/contact-us"
               className="bg-[#f59f8b] text-white px-6 py-2 rounded-md hover:bg-[#e58674] transition"
             >
               Become a Partner
             </Link>
-          </div>
+          </div> */}
         </div>
       </div>
     </section>
